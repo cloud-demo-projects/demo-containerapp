@@ -1,0 +1,47 @@
+trigger: none
+
+parameters:
+  - name: environment
+    type: string
+    displayName: To which environment pipeline has to be run?
+    default: d
+    values:
+      - e
+      - d
+      - t
+      - a
+      - p
+
+# pool:
+#   name: 'Private Pool Docker'
+
+variables:
+  - template: /configuration/${{ parameters.environment }}/variables.yml
+
+stages:
+  - stage:
+    displayName: Deployment
+    jobs:
+      - job: ContainerappDeployment
+        displayName: "Deploy '${{ variables.containerAppName }}'"
+        steps:
+          - task: AzureCLI@2
+            displayName: "Deploy '${{ variables.containerAppName }}'"
+            inputs:
+              azureSubscription: $(resourceGroup)
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: >
+                set -euo pipefail
+                : ${VERBOSE:='--verbose'}
+
+                if [ "${SYSTEM_DEBUG:=false}" == "true" ]; then
+                    set -x
+                    VERBOSE='-debug'
+                fi
+
+                az deployment group create -n $(containerAppName) \
+                -g $(resourceGroup) \
+                --template-file ./main.bicep \
+                -p containerImage=$(containerImage) \
+                  containerPort=$(containerPort)
