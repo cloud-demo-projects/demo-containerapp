@@ -40,8 +40,11 @@ stages:
                     VERBOSE='-debug'
                 fi
 
+                echo $(resourceGroup)
+                echo $(containerAppName)
+
                 az deployment group create -n $(containerAppName) \
-                -g containerapp-rg \
+                -g $(resourceGroup) \
                 --template-file ./main.bicep \
                 -p containerImage=$(containerImage) \
                   containerPort=$(containerPort)
