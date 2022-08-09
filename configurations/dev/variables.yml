@@ -1,6 +1,6 @@
 variables:
-  subscription: 
-  resourceGroup: 
+  subscription: bf0f6779-86d2-467e-8226-10f92a8ad378
+  resourceGroup: containerapp-rg
   containerAppName: containerapp-demo-nipun
   containerImage: mcr.microsoft.com/azuredocs/containerapps-helloworld:latest
   containerPort: 80
