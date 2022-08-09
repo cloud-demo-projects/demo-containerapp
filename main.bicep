@@ -9,7 +9,7 @@ param registryUsername string
 @secure()
 param registryPassword string
 
-module law 'law.bicep' = {
+module law './modules/law.bicep' = {
     name: 'log-analytics-workspace'
     params: {
       location: location
@@ -17,7 +17,7 @@ module law 'law.bicep' = {
     }
 }
 
-module containerAppEnvironment 'environment.bicep' = {
+module containerAppEnvironment './modules/environment.bicep' = {
   name: 'container-app-environment'
   params: {
     name: envName
@@ -27,7 +27,7 @@ module containerAppEnvironment 'environment.bicep' = {
   }
 }
 
-module containerApp 'containerapp.bicep' = {
+module containerApp './modules/containerapp.bicep' = {
   name: 'sample'
   params: {
     name: 'sample-app'
