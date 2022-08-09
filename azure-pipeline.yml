@@ -41,7 +41,7 @@ stages:
                 fi
 
                 az deployment group create -n $(containerAppName) \
-                -g $(resourceGroup) \
+                -g containerapp-rg \
                 --template-file ./main.bicep \
                 -p containerImage=$(containerImage) \
                   containerPort=$(containerPort)
