@@ -28,7 +28,7 @@ stages:
           - task: AzureCLI@2
             displayName: "Deploy '${{ variables.containerAppName }}'"
             inputs:
-              azureSubscription: $(resourceGroup)
+              azureSubscription: $(serviceConnection)
               scriptType: 'bash'
               scriptLocation: 'inlineScript'
               inlineScript: >
