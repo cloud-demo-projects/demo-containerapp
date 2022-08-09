@@ -1,0 +1,6 @@
+variables:
+  subscription: 
+  resourceGroup: 
+  containerAppName: containerapp-demo-nipun
+  containerImage: mcr.microsoft.com/azuredocs/containerapps-helloworld:latest
+  containerPort: 80
