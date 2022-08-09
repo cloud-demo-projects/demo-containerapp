@@ -9,7 +9,7 @@ param containerPort int
 // @secure()
 // param registryPassword string
 
-module law './modules/law.bicep' = {
+module law './modules/loganalyticsws.bicep' = {
     name: 'log-analytics-workspace'
     params: {
       location: location
@@ -17,7 +17,7 @@ module law './modules/law.bicep' = {
     }
 }
 
-module containerAppEnvironment './modules/environment.bicep' = {
+module containerAppEnvironment './modules/managedenv.bicep' = {
   name: 'container-app-environment'
   params: {
     name: envName
