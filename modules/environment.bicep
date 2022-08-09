@@ -1,14 +1,15 @@
 param name string
 param location string
 param lawClientId string
+@secure()
 param lawClientSecret string
 
-resource env 'Microsoft.Web/kubeEnvironments@2021-02-01' = {
+resource env 'Microsoft.App/managedEnvironments@2022-03-01' = {
   name: name
   location: location
   properties: {
-    type: 'managed'
-    internalLoadBalancerEnabled: false
+    //type: 'managed'
+    //internalLoadBalancerEnabled: false
     appLogsConfiguration: {
       destination: 'log-analytics'
       logAnalyticsConfiguration: {
