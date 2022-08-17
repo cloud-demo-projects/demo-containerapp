@@ -3,13 +3,13 @@ param location string
 param lawClientId string
 @secure()
 param lawClientSecret string
+param infrastructureSubnetId string
+param runtimeSubnetId string
 
 resource env 'Microsoft.App/managedEnvironments@2022-03-01' = {
   name: name
   location: location
   properties: {
-    //type: 'managed'
-    //internalLoadBalancerEnabled: false
     appLogsConfiguration: {
       destination: 'log-analytics'
       logAnalyticsConfiguration: {
@@ -17,6 +17,15 @@ resource env 'Microsoft.App/managedEnvironments@2022-03-01' = {
         sharedKey: lawClientSecret
       }
     }
+    vnetConfiguration: {
+      dockerBridgeCidr: '10.2.0.1/16'
+      infrastructureSubnetId: infrastructureSubnetId
+      internal: false
+      platformReservedCidr: '10.1.0.0/16'
+      platformReservedDnsIP: '10.1.0.2'
+      runtimeSubnetId: runtimeSubnetId
+    }
+    zoneRedundant: true
   }
 }
 output id string = env.id
