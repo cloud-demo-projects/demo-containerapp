@@ -3,11 +3,11 @@ param envName string = 'containerapp-demo-nipun'
 
 param containerImage string
 param containerPort int
-// param registry string
-// param registryUsername string
+param infrastructureSubnetId string
+param runtimeSubnetId string
 
-// @secure()
-// param registryPassword string
+param registry string
+param registryUsername string
 
 module law './modules/loganalyticsws.bicep' = {
     name: 'log-analytics-workspace'
@@ -24,6 +24,8 @@ module containerAppEnvironment './modules/managedenv.bicep' = {
     location: location
     lawClientId:law.outputs.clientId
     lawClientSecret: law.outputs.clientSecret
+    infrastructureSubnetId: infrastructureSubnetId
+    runtimeSubnetId: runtimeSubnetId
   }
 }
 
@@ -35,16 +37,15 @@ module containerApp './modules/containerapp.bicep' = {
     containerAppEnvironmentId: containerAppEnvironment.outputs.id
     containerImage: containerImage
     containerPort: containerPort
-    // envVars: [
-    //     {
-    //     name: 'ASPNETCORE_ENVIRONMENT'
-    //     value: 'Production'
-    //     }
-    // ]
+    envVars: [
+        {
+        name: 'ENVIRONMENT'
+        value: 'Sandbox'
+        }
+    ]
     useExternalIngress: true
-    // registry: registry
-    // registryUsername: registryUsername
-    // registryPassword: registryPassword
+    registry: registry
+    registryUsername: registryUsername
 
   }
 }
